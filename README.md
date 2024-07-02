@@ -1,39 +1,70 @@
-# cpp_car_manage_system
+# 一、项目概要
 
-#### 介绍
-{**以下是 Gitee 平台说明，您可以替换此简介**
-Gitee 是 OSCHINA 推出的基于 Git 的代码托管平台（同时支持 SVN）。专为开发者提供稳定、高效、安全的云端软件开发协作平台
-无论是个人、团队、或是企业，都能够用 Gitee 实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}
+项目名称: xx车辆维修管理系统
 
-#### 软件架构
-软件架构说明
+开发人员：8人 【前端3人，后端3人，实习生1人，PM1人】
 
+项目架构：C/S架构
 
-#### 安装教程
+技术栈：C++11、Qt5.12、socket、多线程、json、数据库
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+开发工具：vscode、mobax、qt creator
 
-#### 使用说明
+开发环境：windows/linux
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+主要模块：
 
-#### 参与贡献
+# 二、相关接口
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+## 2.1 前后端数据结构
 
+**TLV协议： head + body**
 
-#### 特技
+```c++
+T: 类型【用于标识请求类型和响应的类型】
+L: 长度【用于标识整个数据包的字节大小】
+V: 具体的数据包
+```
 
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+```c++
+enum Type {
+    LOGIN_REQ, // request
+    LOGIN_RES, // response
+    USERS_REQ,
+    USERS_RES,
+};
+
+struct Head
+{
+    int type;
+    int length;
+};
+
+struct Data
+{
+    Head head;
+    char body[0]; // body主要采用是json字符串形式
+};
+```
+
+## 2.2 登录接口
+
+```json
+登录请求:
+	head：
+		type：0
+		length：head + body
+	body:
+		{"username": "admin", "password": "admin123"};
+登录响应:
+	head：
+		type：1
+		length：head + body
+	body:
+		{	
+			"data": "", 
+			"code": "200/500", 
+			"message": ""
+		};
+```
+

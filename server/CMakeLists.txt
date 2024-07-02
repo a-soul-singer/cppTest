@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0.0)
+cmake_minimum_required(VERSION 3.5.0)
 project(server VERSION 0.1.0 LANGUAGES C CXX)
 
 include_directories(
@@ -11,12 +11,14 @@ include_directories(
 add_subdirectory(opensource/jsoncpp/jsoncpp-1.9.5)
 add_subdirectory(opensource/fmt/fmt-10.2.0)
 
-link_directories(/usr/lib/x86_64-linux-gnu)
+
+link_directories(opensource/jsoncpp/jsoncpp-1.9.5/build/lib)
 
 add_executable(
     server 
-    server.cpp
+    platform/src/server.cpp
     platform/src/db_util.cpp
+    main.cpp
 )
 
 target_link_libraries(

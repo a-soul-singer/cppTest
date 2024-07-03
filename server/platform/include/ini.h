@@ -1,4 +1,6 @@
-#pragma once
+#ifndef INI_H
+#define INI_H
+
 #include <string>
 #include <unordered_map>
 
@@ -19,3 +21,5 @@ private:
 private:
     INI_DATA data_;
 };
+
+#endif

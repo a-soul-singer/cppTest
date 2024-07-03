@@ -1,4 +1,4 @@
-#include "server.h"
+#include "socket.h"
 
 #include "ini.h"
 #include "json/json.h"
@@ -10,7 +10,7 @@ using namespace fmt;
 #define SOCKET_UNIT (8192)
 #define ERROR_CODE (-1)
 
-void serverUtil::writeJsonResponse(int clientFd, int type, const Value &body) {
+void ServerUtil::WriteJsonResponse(int clientFd, int type, const Value &body) {
   FastWriter fastWriter;
   string jsonStr = fastWriter.write(body);
   // head + body
@@ -43,10 +43,10 @@ void serverUtil::writeJsonResponse(int clientFd, int type, const Value &body) {
   LOG_INFO("发送的请求类型:", to_string(type));
   LOG_INFO("发送的请求字节大小:", to_string(head.length));
   LOG_INFO("发送的请求的body:", jsonStr);
-  LOG_INFO("实际发送的字节大小:",to_string(writeSize));
+  LOG_INFO("实际发送的字节大小:", to_string(writeSize));
 }
 
-bool serverUtil::readJsonRequest(int clientFd, int &type, Value &value) {
+bool ServerUtil::ReadJsonRequest(int clientFd, int &type, Value &value) {
   Head head;
   int currReadSize = 0;
   int readSize = 0;
@@ -79,12 +79,12 @@ bool serverUtil::readJsonRequest(int clientFd, int &type, Value &value) {
   }
 }
 
-void serverUtil::subThread(int fd) {
+void ServerUtil::SubThread(int fd) {
   MysqlConnection mysql;
   while (1) {
     int type = -1;
     Value value;
-    bool readRes = readJsonRequest(fd, type, value);
+    bool readRes = ReadJsonRequest(fd, type, value);
     if (!readRes) {
       LOG_ERROR("读取失败");
       break;
@@ -100,19 +100,19 @@ void serverUtil::subThread(int fd) {
         responseBody["code"] = "500";
         responseBody["message"] = "username not found";
         responseBody["data"] = Value();
-        writeJsonResponse(fd, LOGIN_RES, responseBody);
+        WriteJsonResponse(fd, LOGIN_RES, responseBody);
       } else if (SecureUtil::Sha256Salt(password) == res.front().front()) {
         Value responseBody;
         responseBody["code"] = "200";
         responseBody["message"] = "login success";
         responseBody["data"] = Value();
-        writeJsonResponse(fd, LOGIN_RES, responseBody);
+        WriteJsonResponse(fd, LOGIN_RES, responseBody);
       } else {
         Value responseBody;
         responseBody["code"] = "500";
         responseBody["message"] = "username or password error";
         responseBody["data"] = Value();
-        writeJsonResponse(fd, LOGIN_RES, responseBody);
+        WriteJsonResponse(fd, LOGIN_RES, responseBody);
       }
     } else if (type == USERS_REQ) {
       string action = value["action"].asString();
@@ -131,7 +131,7 @@ void serverUtil::subThread(int fd) {
           usersVal.append(userVal);
         }
         responseBody["data"] = usersVal;
-        writeJsonResponse(fd, USERS_RES, responseBody);
+        WriteJsonResponse(fd, USERS_RES, responseBody);
       }
     }
   }
@@ -144,7 +144,7 @@ void serverUtil::subThread(int fd) {
   }
 }
 
-int serverUtil::createClient() {
+int ServerUtil::CreateClient() {
   cout << "server is running" << endl;
   IniParse ins("../config/platform.ini");
   auto serverData = ins.GetSectionData("server");
@@ -222,21 +222,13 @@ int serverUtil::createClient() {
     inet_ntop(AF_INET, &clientAddr.sin_addr.s_addr, ip, sizeof(ip));
     cout << "客户端的IP:" << ip << endl;
     cout << "接收客户端的连接成功" << endl;
-    thread t1(subThread, fd);
+    thread t1(SubThread, fd);
     t1.detach();
   }
   res = close(listenFd);
   if (res == ERROR_CODE) {
     LOG_ERROR("关闭失败");
     return 1;
-  }
-  return 0;
-}
-int main() {
-  int res = serverUtil::createClient();
-  if (res != 0) {
-    LOG_ERROR("连接失败");
-    return -1;
   }
   return 0;
 }

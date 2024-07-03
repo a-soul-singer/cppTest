@@ -15,25 +15,25 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
--- 导出 cpp0219 的数据库结构
-DROP DATABASE IF EXISTS `cpp0219`;
-CREATE DATABASE IF NOT EXISTS `cpp0219` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `cpp0219`;
+-- 导出 car_manage_system 的数据库结构
+DROP DATABASE IF EXISTS `car_manage_system`;
+CREATE DATABASE IF NOT EXISTS `car_manage_system` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `car_manage_system`;
 
--- 导出  表 cpp0219.t_user 结构
+-- 导出  表 car_manage_system.t_user 结构
 DROP TABLE IF EXISTS `t_user`;
 CREATE TABLE IF NOT EXISTS `t_user` (
   `id` int NOT NULL AUTO_INCREMENT,
   `username` varchar(50) DEFAULT NULL,
-  `password` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `password` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- 正在导出表  cpp0219.t_user 的数据：~8 rows (大约)
+-- 正在导出表  car_manage_system.t_user 的数据：~2 rows (大约)
 DELETE FROM `t_user`;
 INSERT INTO `t_user` (`id`, `username`, `password`) VALUES
-	(1, 'root', 'root'),
-	(2, 'admin', 'admin123');
+	(1, 'root', '7014ea6ab6c645f45e7485ad63e27cffeed82697faecc1ff6805c86bf2f714ad'),
+	(2, 'admin', '4a88af90ba5d7f46ff320c723d5281e1926b2a4fecccad65b0e494aac2ddf2ba');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

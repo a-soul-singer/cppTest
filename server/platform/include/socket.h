@@ -10,26 +10,21 @@
 #include <thread>
 #include <unistd.h>
 
-#include "json/json.h"
 #include "fmt/core.h"
+#include "json/json.h"
 
-#include "socket_data.h"
 #include "db_util.h"
 #include "ini.h"
-#include "secure.h"
 #include "logger.h"
+#include "secure.h"
+#include "socket_data.h"
 
-
-
-class serverUtil
-{
+class ServerUtil {
 public:
-static void writeJsonResponse(int clientFd, int type, const  Json::Value &body);
-static bool readJsonRequest(int clientFd, int& type, Json::Value& value);
-static void subThread(int fd);
-static int createClient();
+  static void WriteJsonResponse(int clientFd, int type,const Json::Value &body);
+  static bool ReadJsonRequest(int clientFd, int &type, Json::Value &value);
+  static void SubThread(int fd);
+  static int CreateClient();
 };
-
-
 
 #endif

@@ -2,17 +2,22 @@
 
 #include <iostream>
 
+#include "ini.h"
+#include "secure.h"
+
 using namespace std;
 
 MysqlConnection::MysqlConnection()
 {
     m_mysql = mysql_init(nullptr); // 初始化
+    IniParse ins("../config/platform.ini");
+    auto mysqlData = ins.GetSectionData("mysql");
     mysql_real_connect(m_mysql,
-                       "127.0.0.1",
-                       "root",
-                       "root",
-                       "cpp0219",
-                       3306,
+                       mysqlData["host"].c_str(),
+                       mysqlData["username"].c_str(),
+                       SecureUtil::AesDecryptByCbc(mysqlData["password"]).c_str(),
+                       mysqlData["dbname"].c_str(),
+                       stoi(mysqlData["port"]),
                        nullptr,
                        0);
 }

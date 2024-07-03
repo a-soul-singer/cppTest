@@ -1,5 +1,5 @@
-#ifndef SOCKET_DATA
-#define SOCKET_DATA
+#ifndef SOCKET_DATA_H
+#define SOCKET_DATA_H
 
 enum Type {
     LOGIN_REQ, // request

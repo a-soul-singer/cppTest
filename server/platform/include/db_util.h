@@ -1,5 +1,5 @@
-#ifndef DB_UTIL
-#define DB_UTILS
+#ifndef DB_UTIL_H
+#define DB_UTIL_H
 
 #include <string>
 #include <vector>

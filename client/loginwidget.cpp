@@ -6,6 +6,7 @@ LoginWidget::LoginWidget(QWidget *parent) :
     ui(new Ui::LoginWidget)
 {
     ui->setupUi(this);
+    resize(1200,800);
 }
 
 LoginWidget::~LoginWidget()

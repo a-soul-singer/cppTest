@@ -22,6 +22,8 @@ public:
 private slots:
     void handleSendSocketData(const QJsonObject& body);
     void handleReadyRead();
+signals:
+    void loginRes(bool);
 private:
     Ui::HomeWidget *ui;
     LoginWidget* m_loginWidget;

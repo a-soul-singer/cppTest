@@ -11,18 +11,30 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    companyinfoview.cpp \
     loginwidget.cpp \
     main.cpp \
-    homewidget.cpp
+    homewidget.cpp \
+    optlogview.cpp \
+    syssettingview.cpp \
+    usermanageview.cpp
 
 HEADERS += \
+    companyinfoview.h \
     homewidget.h \
     loginwidget.h \
-    socket_data.h
+    optlogview.h \
+    socket_data.h \
+    syssettingview.h \
+    usermanageview.h
 
 FORMS += \
+    companyinfoview.ui \
     homewidget.ui \
-    loginwidget.ui
+    loginwidget.ui \
+    optlogview.ui \
+    syssettingview.ui \
+    usermanageview.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

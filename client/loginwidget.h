@@ -2,6 +2,7 @@
 #define LOGINWIDGET_H
 
 #include <QJsonObject>
+#include <QSqlDatabase>
 #include <QWidget>
 
 namespace Ui {
@@ -17,14 +18,22 @@ public:
     ~LoginWidget();
 
     void setStatus(const QString& message);
+    void reloadSetting();
+    bool checkIsAutoLogin();
 
 private slots:
     void on_pushButtonLogin_clicked();
+
+public slots:
+    void handleLoginRes(bool isSuccess);
+
 signals:
     void sendSocketData(const QJsonObject& body);
 
 private:
     Ui::LoginWidget *ui;
+    QSqlDatabase m_db;
+    bool m_isAutoLogin;
 };
 
 #endif // LOGINWIDGET_H

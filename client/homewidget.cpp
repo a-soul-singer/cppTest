@@ -12,10 +12,14 @@ HomeWidget::HomeWidget(QWidget *parent)
     ui->setupUi(this);
     m_client = new QTcpSocket(this);
     m_loginWidget = new LoginWidget();
-    m_loginWidget->show();
 
     connect(m_loginWidget, &LoginWidget::sendSocketData, this, &HomeWidget::handleSendSocketData);
+    connect(this, &HomeWidget::loginRes, m_loginWidget, &LoginWidget::handleLoginRes);
     connect(m_client, &QTcpSocket::readyRead, this, &HomeWidget::handleReadyRead);
+    bool autoLogin = m_loginWidget->checkIsAutoLogin();
+    if (!autoLogin) {
+        m_loginWidget->show();
+    }
 }
 
 HomeWidget::~HomeWidget()
@@ -29,6 +33,7 @@ HomeWidget::~HomeWidget()
 void HomeWidget::handleSendSocketData(const QJsonObject &body)
 {
     m_client->connectToHost("192.168.246.151", 10086);
+    qDebug() << "-----------------";
     if (m_client->waitForConnected()) {
         // json对象转为字符串
         QJsonDocument doc(body);
@@ -77,9 +82,11 @@ void HomeWidget::handleReadyRead()
         QJsonObject obj = doc.object();
         QString code = obj["code"].toString();
         if (code == "200") {
+            emit loginRes(true);
             m_loginWidget->hide();
             this->show();
         } else {
+            m_loginWidget->show();
             m_loginWidget->setStatus(obj["message"].toString());
         }
     }

@@ -6,26 +6,37 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>538</width>
+    <height>498</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>50</x>
-     <y>40</y>
-     <width>72</width>
-     <height>15</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>公司简介</string>
-   </property>
-  </widget>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>公司简介</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPlainTextEdit" name="plainTextEdit">
+     <property name="plainText">
+      <string>本公司是一家专业的汽车维修服务提供商，致力于为广大车主提供高品质、快捷的汽车维修服务。公司成立于2020年，经过多年的发展，已经成为当地知名的汽车维修品牌。
+
+本公司拥有一支专业的维修团队，团队成员均具有丰富的汽车维修经验和专业技能。我们采用先进的检测设备和技术，确保维修质量可靠，同时提供24小时紧急救援服务，随时为车主解决用车问题。
+
+我们的服务涵盖了多个领域，包括汽车保养、维修、检测、美容等。我们提供全面的维修套餐，满足不同车主的需求。同时，我们还提供个性化的定制服务，根据车主的需求和预算，为其量身定制最合适的维修方案。
+
+我们注重每一个细节，严格把控服务质量。我们与多个知名汽车零部件品牌建立了合作关系，确保使用的配件品质可靠。同时，我们还提供原厂认证的维修和保养服务，确保车主的车辆得到最好的呵护。
+
+作为一家专业的汽车维修服务提供商，我们将继续秉承“客户至上，质量为本”的服务理念，不断提升服务水平和技术实力，为广大车主提供更加专业、便捷的汽车维修服务。我们相信，在未来的发展中，本公司将成为更多车主的信赖之选。</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>

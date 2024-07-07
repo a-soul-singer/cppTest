@@ -37,6 +37,8 @@ private slots:
 
     void changePage();
 
+    void on_pushButtonExitLogin_clicked();
+
 signals:
     void loginRes(bool);
 private:

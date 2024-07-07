@@ -154,3 +154,11 @@ void HomeWidget::changePage()
 
 
 
+
+void HomeWidget::on_pushButtonExitLogin_clicked()
+{
+    this->hide();
+    m_loginWidget->show();
+
+}
+

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>UserManageView</class>
- <widget class="QWidget" name="UserManageView">
+ <class>StuffManage</class>
+ <widget class="QWidget" name="StuffManage">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>525</width>
-    <height>387</height>
+    <width>400</width>
+    <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,14 +16,14 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>160</x>
-     <y>130</y>
+     <x>120</x>
+     <y>100</y>
      <width>72</width>
      <height>15</height>
     </rect>
    </property>
    <property name="text">
-    <string>用户管理</string>
+    <string>材料管理</string>
    </property>
   </widget>
  </widget>

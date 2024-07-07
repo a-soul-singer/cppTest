@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>638</width>
-    <height>388</height>
+    <width>1166</width>
+    <height>694</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,28 +30,28 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_2">
+         <widget class="QPushButton" name="pushButtonStuffManage">
           <property name="text">
            <string>材料管理</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_5">
+         <widget class="QPushButton" name="pushButtonCarInfo">
           <property name="text">
            <string>车辆介绍</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_4">
+         <widget class="QPushButton" name="pushButtonClientManage">
           <property name="text">
            <string>客户管理</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="pushButtonFix">
           <property name="text">
            <string>维修记录</string>
           </property>
@@ -65,7 +65,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_3">
+         <widget class="QPushButton" name="pushButtonwarning">
           <property name="text">
            <string>系统告警</string>
           </property>

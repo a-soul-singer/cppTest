@@ -1,7 +1,9 @@
 #include "homewidget.h"
 #include "ui_homewidget.h"
 
+
 #include <QDebug>
+#include <QPushButton>
 
 #include "socket_data.h"
 
@@ -12,6 +14,15 @@ HomeWidget::HomeWidget(QWidget *parent)
     ui->setupUi(this);
     m_client = new QTcpSocket(this);
     m_loginWidget = new LoginWidget();
+    m_companyinfoview = new CompanyInfoView();
+    m_optlogview = new OptLogView();
+    m_syssettingview = new SysSettingView();
+    m_usermanageview = new UserManageView();
+    m_carinfo = new Carinfo();
+    m_clientmanage = new ClientManage();
+    m_fixrecord = new FixRecord();
+    m_stuffmanage = new StuffManage();
+    m_systemwarning = new SystemWarning();
 
     connect(m_loginWidget, &LoginWidget::sendSocketData, this, &HomeWidget::handleSendSocketData);
     connect(this, &HomeWidget::loginRes, m_loginWidget, &LoginWidget::handleLoginRes);
@@ -20,6 +31,44 @@ HomeWidget::HomeWidget(QWidget *parent)
     if (!autoLogin) {
         m_loginWidget->show();
     }
+
+    buttonList.append(ui->pushButtonCompanyInfo);
+    buttonList.append(ui->pushButtonOptLog);
+    buttonList.append(ui->pushButtonSysSetting);
+    buttonList.append(ui->pushButtonStuffManage);
+    buttonList.append(ui->pushButtonCarInfo);
+    buttonList.append(ui->pushButtonClientManage);
+    buttonList.append(ui->pushButtonFix);
+    buttonList.append(ui->pushButtonwarning);
+    buttonList.append(ui->pushButtonUserManage);
+
+
+    pageMap.insert(ui->pushButtonCompanyInfo,m_companyinfoview);
+    pageMap.insert(ui->pushButtonOptLog,m_optlogview);
+    pageMap.insert(ui->pushButtonSysSetting,m_syssettingview);
+    pageMap.insert(ui->pushButtonUserManage,m_usermanageview);
+    pageMap.insert(ui->pushButtonStuffManage,m_stuffmanage);
+    pageMap.insert(ui->pushButtonCarInfo,m_carinfo);
+    pageMap.insert(ui->pushButtonClientManage,m_clientmanage);
+    pageMap.insert(ui->pushButtonFix,m_fixrecord);
+    pageMap.insert(ui->pushButtonwarning,m_systemwarning);
+
+    ui->stackedWidget->addWidget(m_companyinfoview);
+    ui->stackedWidget->addWidget(m_optlogview);
+    ui->stackedWidget->addWidget(m_syssettingview);
+    ui->stackedWidget->addWidget(m_usermanageview);
+    ui->stackedWidget->addWidget(m_stuffmanage);
+    ui->stackedWidget->addWidget(m_carinfo);
+    ui->stackedWidget->addWidget(m_clientmanage);
+    ui->stackedWidget->addWidget(m_fixrecord);
+    ui->stackedWidget->addWidget(m_systemwarning);
+
+    for (QPushButton *button : buttonList) {
+        connect(button, &QPushButton::clicked, this, &HomeWidget::changePage);
+    }
+
+    ui->stackedWidget->setCurrentWidget(m_companyinfoview);
+
 }
 
 HomeWidget::~HomeWidget()
@@ -91,4 +140,17 @@ void HomeWidget::handleReadyRead()
         }
     }
 }
+
+void HomeWidget::changePage()
+{
+    QPushButton *senderButton = qobject_cast<QPushButton*>(sender());
+    if (senderButton) {
+        QWidget *targetPage = pageMap.value(senderButton, nullptr);
+        if (targetPage) {
+            ui->stackedWidget->setCurrentWidget(targetPage);
+        }
+    }
+}
+
+
 

@@ -11,29 +11,44 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    carinfo.cpp \
+    clientmanage.cpp \
     companyinfoview.cpp \
+    fixrecord.cpp \
     loginwidget.cpp \
     main.cpp \
     homewidget.cpp \
     optlogview.cpp \
+    stuffmanage.cpp \
     syssettingview.cpp \
+    systemwarning.cpp \
     usermanageview.cpp
 
 HEADERS += \
+    carinfo.h \
+    clientmanage.h \
     companyinfoview.h \
+    fixrecord.h \
     homewidget.h \
     loginwidget.h \
     optlogview.h \
     socket_data.h \
+    stuffmanage.h \
     syssettingview.h \
+    systemwarning.h \
     usermanageview.h
 
 FORMS += \
+    carinfo.ui \
+    clientmanage.ui \
     companyinfoview.ui \
+    fixrecord.ui \
     homewidget.ui \
     loginwidget.ui \
     optlogview.ui \
+    stuffmanage.ui \
     syssettingview.ui \
+    systemwarning.ui \
     usermanageview.ui
 
 # Default rules for deployment.

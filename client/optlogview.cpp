@@ -1,6 +1,7 @@
 #include "optlogview.h"
 #include "ui_optlogview.h"
 
+
 OptLogView::OptLogView(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::OptLogView)
@@ -12,3 +13,5 @@ OptLogView::~OptLogView()
 {
     delete ui;
 }
+
+

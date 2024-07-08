@@ -3,10 +3,6 @@
 
 #include <QWidget>
 
-#include <QLineEdit>
-#include <QPushButton>
-#include <QTableWidget>
-
 namespace Ui {
 class UserManageView;
 }
@@ -20,11 +16,7 @@ public:
     ~UserManageView();
 
 private:
-
-    QLineEdit *usernameEdit;
-    QPushButton *addButton;
-    QTableWidget *userTable;
-    //Ui::UserManageView *ui;
+    Ui::UserManageView *ui;
 };
 
 #endif // USERMANAGEVIEW_H

@@ -1,11 +1,13 @@
 #include "homewidget.h"
 #include "ui_homewidget.h"
 
-
+#include <QApplication>
+#include <QDesktopWidget>
 #include <QDebug>
 #include <QPushButton>
 
 #include "socket_data.h"
+
 
 HomeWidget::HomeWidget(QWidget *parent)
     : QWidget(parent)
@@ -69,6 +71,8 @@ HomeWidget::HomeWidget(QWidget *parent)
 
     ui->stackedWidget->setCurrentWidget(m_companyinfoview);
 
+    m_optLogView = new OptLogView();
+    connect(ui->pushButtonOptLog,&QPushButton::clicked,this,&HomeWidget::handleOptLogBtnClicked);
 }
 
 HomeWidget::~HomeWidget()
@@ -81,7 +85,7 @@ HomeWidget::~HomeWidget()
 
 void HomeWidget::handleSendSocketData(const QJsonObject &body)
 {
-    m_client->connectToHost("192.168.246.151", 10086);
+    m_client->connectToHost("192.168.1.5", 10086);
     qDebug() << "-----------------";
     if (m_client->waitForConnected()) {
         // json对象转为字符串
@@ -153,12 +157,19 @@ void HomeWidget::changePage()
 }
 
 
-
-
-void HomeWidget::on_pushButtonExitLogin_clicked()
+void HomeWidget::handleOptLogBtnClicked()
 {
     this->hide();
-    m_loginWidget->show();
 
+    m_optLogView->setGeometry(0,0,1000,800);
+    QRect screenRect = QApplication::desktop()->screenGeometry();
+    int centerX = (screenRect.width() - m_optLogView->width()) / 2;
+    int centerY = (screenRect.height() - m_optLogView->height()) / 2;
+    m_optLogView->move(centerX, centerY);
+
+    m_optLogView->show();
+    if(!m_optLogView->isVisible()){
+        this->show();
+    }
 }
 

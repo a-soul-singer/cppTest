@@ -19,7 +19,6 @@
 #include "systemwarning.h"
 #include "clientmanage.h"
 
-#include "optlogview.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class HomeWidget; }
@@ -38,7 +37,8 @@ private slots:
 
     void changePage();
 
-    void handleOptLogBtnClicked();
+    void on_pushButtonExitLogin_clicked();
+
 signals:
     void loginRes(bool);
 private:
@@ -58,8 +58,5 @@ private:
 
     QMap<QPushButton*, QWidget*> pageMap;
     QList<QPushButton*> buttonList;
-
-private:
-    OptLogView* m_optLogView;
 };
 #endif // HOMEWIDGET_H

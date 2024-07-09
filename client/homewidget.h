@@ -57,5 +57,8 @@ private:
 
     QMap<QPushButton*, QWidget*> pageMap;
     QList<QPushButton*> buttonList;
+
+    QString m_host;
+    QString m_port;
 };
 #endif // HOMEWIDGET_H

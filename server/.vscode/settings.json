@@ -60,6 +60,8 @@
         "complex": "cpp",
         "list": "cpp",
         "source_location": "cpp",
-        "typeindex": "cpp"
+        "typeindex": "cpp",
+        "condition_variable": "cpp",
+        "mutex": "cpp"
     }
 }

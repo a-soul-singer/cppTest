@@ -10,6 +10,9 @@ CONFIG += c++11
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+INCLUDEPATH += D:/qt_study/qt_0703/qxlsx/include
+LIBS += -LD:/qt_study/qt_0703/qxlsx/lib -lQXlsx
+
 SOURCES += \
     carinfo.cpp \
     clientmanage.cpp \

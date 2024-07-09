@@ -13,7 +13,7 @@ LoginWidget::LoginWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     m_db = QSqlDatabase::addDatabase("QSQLITE");
-    m_db.setDatabaseName("..\\client\\datatbase");
+    m_db.setDatabaseName("..\\client\\datatbase\\system.db");
     if (!m_db.open()) {
         return;
     }

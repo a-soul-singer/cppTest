@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -38,28 +38,28 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="puBfirstpage">
+       <widget class="QPushButton" name="btnfirstpage">
         <property name="text">
          <string>首页</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="puBpreviouspage">
+       <widget class="QPushButton" name="btnpreviouspage">
         <property name="text">
          <string>上一页</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="puBnextpage">
+       <widget class="QPushButton" name="btnnextpage">
         <property name="text">
          <string>下一页</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="puBtailpage">
+       <widget class="QPushButton" name="btntailpage">
         <property name="text">
          <string>尾页</string>
         </property>
@@ -82,7 +82,7 @@
        <widget class="QSpinBox" name="spinBox"/>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButtonjump">
+       <widget class="QPushButton" name="btnjump">
         <property name="text">
          <string>跳转</string>
         </property>

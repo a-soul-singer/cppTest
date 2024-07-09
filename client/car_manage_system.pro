@@ -15,6 +15,7 @@ SOURCES += \
     clientmanage.cpp \
     companyinfoview.cpp \
     fixrecord.cpp \
+    loginsettings.cpp \
     loginwidget.cpp \
     main.cpp \
     homewidget.cpp \
@@ -30,6 +31,7 @@ HEADERS += \
     companyinfoview.h \
     fixrecord.h \
     homewidget.h \
+    loginsettings.h \
     loginwidget.h \
     optlogview.h \
     socket_data.h \
@@ -44,6 +46,7 @@ FORMS += \
     companyinfoview.ui \
     fixrecord.ui \
     homewidget.ui \
+    loginsettings.ui \
     loginwidget.ui \
     optlogview.ui \
     stuffmanage.ui \

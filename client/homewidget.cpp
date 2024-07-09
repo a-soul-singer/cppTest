@@ -68,6 +68,12 @@ HomeWidget::HomeWidget(QWidget *parent)
     }
 
     ui->stackedWidget->setCurrentWidget(m_companyinfoview);
+
+    connect(m_loginWidget,&LoginWidget::sendClientData,this,[this](QStringList& list){
+        this->m_host=list[0];
+        this->m_port=list[1];
+    });
+
 }
 
 HomeWidget::~HomeWidget()
@@ -80,7 +86,8 @@ HomeWidget::~HomeWidget()
 
 void HomeWidget::handleSendSocketData(const QJsonObject &body)
 {
-    m_client->connectToHost("192.168.246.151", 10086);
+    m_client->connectToHost(m_host,m_port.toUShort());
+
     qDebug() << "-----------------";
     if (m_client->waitForConnected()) {
         // json对象转为字符串
@@ -155,5 +162,6 @@ void HomeWidget::handleChangePage()
 void HomeWidget::on_pushButtonExitLogin_clicked()
 {
     this->hide();
+    emit
     m_loginWidget->show();
 }

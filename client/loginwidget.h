@@ -5,6 +5,8 @@
 #include <QSqlDatabase>
 #include <QWidget>
 
+#include "loginsettings.h"
+
 namespace Ui {
 class LoginWidget;
 }
@@ -26,14 +28,18 @@ private slots:
 
 public slots:
     void handleLoginRes(bool isSuccess);
+    void handleSetBtnClicked();
+    void handleLogSetSignal(QStringList& list);
+    void handleLogCancelSignal();
 
 signals:
     void sendSocketData(const QJsonObject& body);
-
+    void sendClientData(QStringList&list);
 private:
     Ui::LoginWidget *ui;
-    QSqlDatabase m_db;
     bool m_isAutoLogin;
+    QSqlDatabase m_db;
+    LoginSettings* m_loginSettingWidget;
 };
 
 #endif // LOGINWIDGET_H

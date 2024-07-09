@@ -34,8 +34,7 @@ public:
 private slots:
     void handleSendSocketData(const QJsonObject& body);
     void handleReadyRead();
-
-    void changePage();
+    void handleChangePage();
 
     void on_pushButtonExitLogin_clicked();
 

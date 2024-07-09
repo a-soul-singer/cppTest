@@ -43,15 +43,15 @@ HomeWidget::HomeWidget(QWidget *parent)
     buttonList.append(ui->pushButtonUserManage);
 
 
-    pageMap.insert(ui->pushButtonCompanyInfo,m_companyinfoview);
-    pageMap.insert(ui->pushButtonOptLog,m_optlogview);
-    pageMap.insert(ui->pushButtonSysSetting,m_syssettingview);
-    pageMap.insert(ui->pushButtonUserManage,m_usermanageview);
-    pageMap.insert(ui->pushButtonStuffManage,m_stuffmanage);
-    pageMap.insert(ui->pushButtonCarInfo,m_carinfo);
-    pageMap.insert(ui->pushButtonClientManage,m_clientmanage);
-    pageMap.insert(ui->pushButtonFix,m_fixrecord);
-    pageMap.insert(ui->pushButtonwarning,m_systemwarning);
+    pageMap.insert(ui->pushButtonCompanyInfo, m_companyinfoview);
+    pageMap.insert(ui->pushButtonOptLog, m_optlogview);
+    pageMap.insert(ui->pushButtonSysSetting, m_syssettingview);
+    pageMap.insert(ui->pushButtonUserManage, m_usermanageview);
+    pageMap.insert(ui->pushButtonStuffManage, m_stuffmanage);
+    pageMap.insert(ui->pushButtonCarInfo, m_carinfo);
+    pageMap.insert(ui->pushButtonClientManage, m_clientmanage);
+    pageMap.insert(ui->pushButtonFix, m_fixrecord);
+    pageMap.insert(ui->pushButtonwarning, m_systemwarning);
 
     ui->stackedWidget->addWidget(m_companyinfoview);
     ui->stackedWidget->addWidget(m_optlogview);
@@ -64,11 +64,10 @@ HomeWidget::HomeWidget(QWidget *parent)
     ui->stackedWidget->addWidget(m_systemwarning);
 
     for (QPushButton *button : buttonList) {
-        connect(button, &QPushButton::clicked, this, &HomeWidget::changePage);
+        connect(button, &QPushButton::clicked, this, &HomeWidget::handleChangePage);
     }
 
     ui->stackedWidget->setCurrentWidget(m_companyinfoview);
-
 }
 
 HomeWidget::~HomeWidget()
@@ -141,7 +140,7 @@ void HomeWidget::handleReadyRead()
     }
 }
 
-void HomeWidget::changePage()
+void HomeWidget::handleChangePage()
 {
     QPushButton *senderButton = qobject_cast<QPushButton*>(sender());
     if (senderButton) {
@@ -153,12 +152,8 @@ void HomeWidget::changePage()
 }
 
 
-
-
 void HomeWidget::on_pushButtonExitLogin_clicked()
 {
     this->hide();
     m_loginWidget->show();
-
 }
-

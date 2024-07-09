@@ -1,10 +1,10 @@
 #include "loginwidget.h"
 #include "ui_loginwidget.h"
 
+
 #include <QDateTime>
 #include <QSqlDatabase>
 #include <QSqlQuery>
-
 #include <QDebug>
 
 LoginWidget::LoginWidget(QWidget *parent) :
@@ -12,13 +12,18 @@ LoginWidget::LoginWidget(QWidget *parent) :
     ui(new Ui::LoginWidget)
 {
     ui->setupUi(this);
-    m_db = QSqlDatabase::addDatabase("QSQLITE");
+    m_db=QSqlDatabase::addDatabase("QSQLITE");
     m_db.setDatabaseName("..\\client\\datatbase\\system.db");
     if (!m_db.open()) {
         return;
     }
     m_isAutoLogin = false;
     reloadSetting();
+
+    m_loginSettingWidget=new LoginSettings();
+    connect(ui->pushButtonSetting,&QPushButton::clicked,this,&LoginWidget::handleSetBtnClicked);
+    connect(m_loginSettingWidget,&LoginSettings::LogSetSignal,this,handleLogSetSignal);
+    connect(m_loginSettingWidget,&LoginSettings::LogCancelSignal,this,handleLogCancelSignal);
 }
 
 LoginWidget::~LoginWidget()
@@ -137,4 +142,24 @@ void LoginWidget::handleLoginRes(bool isSuccess)
         QString updateSettingSql = "update t_setting set remember_pwd=%1, auto_login=%2 where user_id = %3;";
         query.exec(updateSettingSql.arg(checkBoxRememberPwd).arg(checkBoxAutoLogin).arg(existId));
     }
+}
+
+void LoginWidget::handleSetBtnClicked()
+{
+    this->close();
+    m_loginSettingWidget->show();
+}
+
+void LoginWidget::handleLogSetSignal(QStringList& list) // 处理确定按钮的信号
+{
+    QSqlQuery query(m_db);
+    QString sql = "insert into t_server(host, port) values('%1', '%2');";
+    query.exec(sql.arg(list[0]).arg(list[1]));
+    emit sendClientData(list);
+    this->show();
+}
+
+void LoginWidget::handleLogCancelSignal() // 处理取消按钮的信号
+{
+    this->show();
 }

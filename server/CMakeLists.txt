@@ -19,6 +19,7 @@ aux_source_directory(platform/src SRC_CODE)
 
 add_executable(
     server 
+    main.cpp
     ${SRC_CODE}
 )
 # 设置目标程序编译后的位置

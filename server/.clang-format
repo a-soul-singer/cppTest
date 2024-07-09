@@ -1,0 +1,83 @@
+# 当前配置语言的区段是c++
+Language: Cpp
+# 基础样式
+BasedOnStyle: Google
+# 指针的*的挨着哪边
+PointerAlignment: Left
+# 访问修饰符前的空格
+AccessModifierOffset: -4
+# 缩进宽度
+IndentWidth: 4
+# 连续的空行保留几行
+MaxEmptyLinesToKeep: 1
+# 是否允许短方法单行
+AllowShortFunctionsOnASingleLine: false
+# 支持一行的if
+AllowShortIfStatementsOnASingleLine: false
+# 在未封闭(括号的开始和结束不在同一行)的括号中的代码是否对齐
+AlignAfterOpenBracket: true
+# switch的case缩进
+IndentCaseLabels: true
+# 针对OC的block的缩进宽度
+ObjCBlockIndentWidth: 4
+# 针对OC，属性名后加空格
+ObjCSpaceAfterProperty: true
+# 每行字符的长度
+ColumnLimit: 120
+# 注释对齐
+AlignTrailingComments: true
+# 括号后加空格
+SpaceAfterCStyleCast: false
+# 换行的时候对齐操作符
+AlignOperands: true
+# 中括号两边空格 []
+SpacesInSquareBrackets: false
+# 多行声明语句按照=对齐
+AlignConsecutiveDeclarations: false
+# 容器类的空格
+SpacesInContainerLiterals: false
+# 在构造函数初始化时按逗号断行，并以冒号对齐
+BreakConstructorInitializersBeforeComma: true
+# 函数参数换行
+AllowAllParametersOfDeclarationOnNextLine: true
+#在续行(下一行)时的缩进长度
+ContinuationIndentWidth: 4
+# tab键盘的宽度
+TabWidth: 4
+# 赋值运算符前加空格
+SpaceBeforeAssignmentOperators: true
+# 行尾的注释前加1个空格
+SpacesBeforeTrailingComments: 1
+# 允许排序#include
+SortIncludes: false
+# 如果为false，函数调用的参数要么全部在同一行，要么各有一行。
+BinPackArguments: false
+# 如果为false，函数声明或函数定义的参数将全部在同一行或各有一行。
+BinPackParameters: false
+# 换行的位置设置
+BreakBeforeBraces: Custom
+BraceWrapping:
+    # enum定义后面
+    AfterEnum: true
+    # struct定义后面
+    AfterStruct: true
+    # class定义后面
+    AfterClass: true
+    # 命名空间定义后面
+    AfterNamespace: true
+    # 函数定义后面
+    AfterFunction: true
+    # union定义后面
+    AfterUnion: true
+    # case后换行
+    AfterCaseLabel: true
+    # 控制语句后面
+    AfterControlStatement: false
+    # catch之前
+    BeforeCatch: false
+    # else之前
+    BeforeElse: false
+    # 缩进大括号
+    IndentBraces: false
+    # extern 
+    AfterExternBlock: false

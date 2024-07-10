@@ -23,6 +23,7 @@ SOURCES += \
     main.cpp \
     homewidget.cpp \
     optlogview.cpp \
+    register.cpp \
     sqliteclient.cpp \
     stuffmanage.cpp \
     syssettingview.cpp \
@@ -38,6 +39,7 @@ HEADERS += \
     loginsettings.h \
     loginwidget.h \
     optlogview.h \
+    register.h \
     socket_data.h \
     sqliteclient.h \
     stuffmanage.h \
@@ -54,6 +56,7 @@ FORMS += \
     loginsettings.ui \
     loginwidget.ui \
     optlogview.ui \
+    register.ui \
     stuffmanage.ui \
     syssettingview.ui \
     systemwarning.ui \

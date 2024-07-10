@@ -8,6 +8,8 @@ enum Type {
     USERS_RES,
     OPT_LOG_REQ,
     OPT_LOG_RES,
+    REGISTER_REQ,
+    REGISTER_RES
 };
 
 struct Head

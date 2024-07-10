@@ -29,6 +29,7 @@ HomeWidget::HomeWidget(QWidget *parent)
 
     connect(m_loginWidget, &LoginWidget::sendSocketData, this, &HomeWidget::handleSendSocketData);
     connect(m_optlogview, &OptLogView::sendSocketData, this, &HomeWidget::handleSendSocketData);
+    connect(m_loginWidget->getRegister(), &Register::sendSocketData, this, &HomeWidget::handleSendSocketData);
 
     connect(this, &HomeWidget::loginRes, m_loginWidget, &LoginWidget::handleLoginRes);
     connect(m_client, &QTcpSocket::readyRead, this, &HomeWidget::handleReadyRead);
@@ -134,6 +135,37 @@ void HomeWidget::handleSendSocketData(int type, QJsonObject &body)
         qDebug() << "发送的请求字节大小:" << head.length;
         qDebug() << "发送的请求的body:" << bytes;
         qDebug() << "实际发送的字节大小:" << writeSize;
+    } else if (type == REGISTER_REQ) {
+        // 通过查询数据库中的数据，判断host和port是否存在
+        auto res = m_sqliteCls->execQuerySqlLimitOne("select * from t_server limit 1;");
+        if (!res.isEmpty()) {
+            m_host = res[1].toString();
+            m_port = res[2].toString();
+        } else {
+            m_loginWidget->setStatus("请设置服务端信息");
+            return;
+        }
+        m_client->connectToHost(m_host, m_port.toUShort());
+        qDebug() << "-----------------";
+        if (m_client->waitForConnected()) {
+            // json对象转为字符串
+            QJsonDocument doc(body);
+            QByteArray bytes = doc.toJson(QJsonDocument::Compact);
+            Head head;
+            head.type = type;
+            head.length = sizeof(Head) + bytes.size();
+            char *request = new char[head.length];
+            struct Data *data = (struct Data *)request;
+            data->head = head;
+            memcpy(data->body, bytes.data(), bytes.size());
+            qint64 writeSize = m_client->write(request, head.length);
+            qDebug() << "发送的请求类型:" << head.type;
+            qDebug() << "发送的请求字节大小:" << head.length;
+            qDebug() << "发送的请求的body:" << bytes;
+            qDebug() << "实际发送的字节大小:" << writeSize;
+        } else {
+            m_loginWidget->setStatus("连接失败");
+        }
     }
 }
 
@@ -174,6 +206,13 @@ void HomeWidget::handleReadyRead()
             }
         } else if (head.type == OPT_LOG_RES) {
             m_optlogview->handleResponse(obj);
+        } else if (head.type == REGISTER_RES) {
+            if (code == "200") {
+                m_loginWidget->getRegister()->hide();
+            } else {
+                m_loginWidget->show();
+                m_loginWidget->getRegister()->setStatus(obj["message"].toString());
+            }
         }
     }
 }

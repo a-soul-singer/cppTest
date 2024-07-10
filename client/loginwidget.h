@@ -6,6 +6,7 @@
 
 #include "sqliteclient.h"
 #include "loginsettings.h"
+#include "register.h"
 
 namespace Ui {
 class LoginWidget;
@@ -30,13 +31,17 @@ public slots:
     void handleLoginRes(bool isSuccess);
     void handleSetBtnClicked();
     void handleLogSetSignal(const QString& host, const QString& port);
-
+    void handleRegisterShow();
+    Register* getRegister() {
+        return m_registerWidget;
+    }
 signals:
     void sendSocketData(int type, QJsonObject& body);
 private:
     Ui::LoginWidget *ui;
     bool m_isAutoLogin;
     LoginSettings* m_loginSettingWidget;
+    Register* m_registerWidget;
     SqliteClient* m_sqliteCls;
 };
 

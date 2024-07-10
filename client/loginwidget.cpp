@@ -22,6 +22,11 @@ LoginWidget::LoginWidget(QWidget *parent) :
     m_loginSettingWidget->setWindowModality(Qt::ApplicationModal);
     connect(ui->pushButtonSetting,&QPushButton::clicked,this,&LoginWidget::handleSetBtnClicked);
     connect(m_loginSettingWidget,&LoginSettings::LogSetSignal,this,&LoginWidget::handleLogSetSignal);
+
+    m_registerWidget = new Register();
+    // 将设置界面变为模态窗口
+    m_registerWidget->setWindowModality(Qt::ApplicationModal);
+    connect(ui->pushButtonRegister,&QPushButton::clicked,this,&LoginWidget::handleRegisterShow);
 }
 
 LoginWidget::~LoginWidget()
@@ -154,4 +159,9 @@ void LoginWidget::handleLogSetSignal(const QString& host, const QString& port) /
          sql = "insert into t_server(host, port) values('%1', '%2');";
     }
     m_sqliteCls->execOtherSql(sql.arg(host).arg(port));
+}
+
+void LoginWidget::handleRegisterShow()
+{
+    m_registerWidget->show();
 }

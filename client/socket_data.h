@@ -6,6 +6,8 @@ enum Type {
     LOGIN_RES, // response
     USERS_REQ,
     USERS_RES,
+    OPT_LOG_REQ,
+    OPT_LOG_RES,
 };
 
 struct Head

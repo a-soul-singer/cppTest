@@ -4,6 +4,7 @@
 
 #include <QDebug>
 #include <QPushButton>
+#include <QSqlQuery>
 
 #include "socket_data.h"
 
@@ -12,6 +13,8 @@ HomeWidget::HomeWidget(QWidget *parent)
     , ui(new Ui::HomeWidget)
 {
     ui->setupUi(this);
+    m_sqliteCls = SqliteClient::getInstance();
+
     m_client = new QTcpSocket(this);
     m_loginWidget = new LoginWidget();
     m_companyinfoview = new CompanyInfoView();
@@ -25,6 +28,8 @@ HomeWidget::HomeWidget(QWidget *parent)
     m_systemwarning = new SystemWarning();
 
     connect(m_loginWidget, &LoginWidget::sendSocketData, this, &HomeWidget::handleSendSocketData);
+    connect(m_optlogview, &OptLogView::sendSocketData, this, &HomeWidget::handleSendSocketData);
+
     connect(this, &HomeWidget::loginRes, m_loginWidget, &LoginWidget::handleLoginRes);
     connect(m_client, &QTcpSocket::readyRead, this, &HomeWidget::handleReadyRead);
     bool autoLogin = m_loginWidget->checkIsAutoLogin();
@@ -68,12 +73,6 @@ HomeWidget::HomeWidget(QWidget *parent)
     }
 
     ui->stackedWidget->setCurrentWidget(m_companyinfoview);
-
-    connect(m_loginWidget,&LoginWidget::sendClientData,this,[this](QStringList& list){
-        this->m_host=list[0];
-        this->m_port=list[1];
-    });
-
 }
 
 HomeWidget::~HomeWidget()
@@ -84,17 +83,47 @@ HomeWidget::~HomeWidget()
     }
 }
 
-void HomeWidget::handleSendSocketData(const QJsonObject &body)
+void HomeWidget::handleSendSocketData(int type, QJsonObject &body)
 {
-    m_client->connectToHost(m_host,m_port.toUShort());
-
-    qDebug() << "-----------------";
-    if (m_client->waitForConnected()) {
+    if (type == LOGIN_REQ) {
+        // 通过查询数据库中的数据，判断host和port是否存在
+        auto res = m_sqliteCls->execQuerySqlLimitOne("select * from t_server limit 1;");
+        if (!res.isEmpty()) {
+            m_host = res[1].toString();
+            m_port = res[2].toString();
+        } else {
+            m_loginWidget->setStatus("请设置服务端信息");
+            return;
+        }
+        m_client->connectToHost(m_host, m_port.toUShort());
+        qDebug() << "-----------------";
+        if (m_client->waitForConnected()) {
+            m_currUser = body["username"].toString();
+            // json对象转为字符串
+            QJsonDocument doc(body);
+            QByteArray bytes = doc.toJson(QJsonDocument::Compact);
+            Head head;
+            head.type = type;
+            head.length = sizeof(Head) + bytes.size();
+            char *request = new char[head.length];
+            struct Data *data = (struct Data *)request;
+            data->head = head;
+            memcpy(data->body, bytes.data(), bytes.size());
+            qint64 writeSize = m_client->write(request, head.length);
+            qDebug() << "发送的请求类型:" << head.type;
+            qDebug() << "发送的请求字节大小:" << head.length;
+            qDebug() << "发送的请求的body:" << bytes;
+            qDebug() << "实际发送的字节大小:" << writeSize;
+        } else {
+            m_loginWidget->setStatus("连接失败");
+        }
+    } else if (type == OPT_LOG_REQ){
+        body["username"] = m_currUser;
         // json对象转为字符串
         QJsonDocument doc(body);
         QByteArray bytes = doc.toJson(QJsonDocument::Compact);
         Head head;
-        head.type = LOGIN_REQ;
+        head.type = type;
         head.length = sizeof(Head) + bytes.size();
         char *request = new char[head.length];
         struct Data *data = (struct Data *)request;
@@ -105,8 +134,6 @@ void HomeWidget::handleSendSocketData(const QJsonObject &body)
         qDebug() << "发送的请求字节大小:" << head.length;
         qDebug() << "发送的请求的body:" << bytes;
         qDebug() << "实际发送的字节大小:" << writeSize;
-    } else {
-        qDebug() << "连接失败" << endl;
     }
 }
 
@@ -136,13 +163,17 @@ void HomeWidget::handleReadyRead()
     } else {
         QJsonObject obj = doc.object();
         QString code = obj["code"].toString();
-        if (code == "200") {
-            emit loginRes(true);
-            m_loginWidget->hide();
-            this->show();
-        } else {
-            m_loginWidget->show();
-            m_loginWidget->setStatus(obj["message"].toString());
+        if (head.type == LOGIN_RES) {
+            if (code == "200") {
+                emit loginRes(true);
+                m_loginWidget->hide();
+                this->show();
+            } else {
+                m_loginWidget->show();
+                m_loginWidget->setStatus(obj["message"].toString());
+            }
+        } else if (head.type == OPT_LOG_RES) {
+            m_optlogview->handleResponse(obj);
         }
     }
 }
@@ -151,17 +182,17 @@ void HomeWidget::handleChangePage()
 {
     QPushButton *senderButton = qobject_cast<QPushButton*>(sender());
     if (senderButton) {
-        QWidget *targetPage = pageMap.value(senderButton, nullptr);
-        if (targetPage) {
-            ui->stackedWidget->setCurrentWidget(targetPage);
+        QWidget *targetPage = pageMap[senderButton];
+        if (targetPage == m_optlogview) { // 当前是操作日志界面
+            // 向后端发送请求
+            m_optlogview->changeWindowRequest();
         }
+        ui->stackedWidget->setCurrentWidget(targetPage);
     }
 }
-
 
 void HomeWidget::on_pushButtonExitLogin_clicked()
 {
     this->hide();
-    emit
     m_loginWidget->show();
 }

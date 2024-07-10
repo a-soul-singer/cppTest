@@ -18,6 +18,7 @@
 #include "carinfo.h"
 #include "systemwarning.h"
 #include "clientmanage.h"
+#include "sqliteclient.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -32,7 +33,7 @@ public:
     HomeWidget(QWidget *parent = nullptr);
     ~HomeWidget();
 private slots:
-    void handleSendSocketData(const QJsonObject& body);
+    void handleSendSocketData(int type, QJsonObject& body);
     void handleReadyRead();
     void handleChangePage();
 
@@ -60,5 +61,7 @@ private:
 
     QString m_host;
     QString m_port;
+    QString m_currUser;
+    SqliteClient* m_sqliteCls;
 };
 #endif // HOMEWIDGET_H

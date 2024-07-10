@@ -1,0 +1,16 @@
+QWidget {
+    background: rgb(255, 255, 255);
+}
+
+QComboBox {
+    background: rgb(0, 255, 0);
+}
+
+
+QComboBox#comBoxSysSetting {
+    background: rgb(0, 0, 255);
+}
+
+QComboBox:hover {
+    border-color: #5c93fe; 
+}

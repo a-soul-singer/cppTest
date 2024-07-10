@@ -1,6 +1,7 @@
 QT       += core gui
 QT       += network
 QT       += sql
+QT       += charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -17,9 +18,12 @@ INCLUDEPATH += $$PWD/qxlsx/include
 LIBS += -L $$PWD/qxlsx/lib -l QXlsx
 
 SOURCES += \
+    AES/qaesencryption.cpp \
+    aesencryptionmanager.cpp \
     carinfo.cpp \
     clientmanage.cpp \
     companyinfoview.cpp \
+    electronicinterface.cpp \
     fixrecord.cpp \
     loginsettings.cpp \
     loginwidget.cpp \
@@ -33,9 +37,16 @@ SOURCES += \
     usermanageview.cpp
 
 HEADERS += \
+    AES/aesni-enc-cbc.h \
+    AES/aesni-enc-ecb.h \
+    AES/aesni-key-exp.h \
+    AES/aesni-key-init.h \
+    AES/qaesencryption.h \
+    aesencryptionmanager.h \
     carinfo.h \
     clientmanage.h \
     companyinfoview.h \
+    electronicinterface.h \
     fixrecord.h \
     homewidget.h \
     loginsettings.h \
@@ -52,6 +63,7 @@ FORMS += \
     carinfo.ui \
     clientmanage.ui \
     companyinfoview.ui \
+    electronicinterface.ui \
     fixrecord.ui \
     homewidget.ui \
     loginsettings.ui \

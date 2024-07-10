@@ -2,9 +2,9 @@
 #define LOGINWIDGET_H
 
 #include <QJsonObject>
-#include <QSqlDatabase>
 #include <QWidget>
 
+#include "sqliteclient.h"
 #include "loginsettings.h"
 
 namespace Ui {
@@ -29,17 +29,15 @@ private slots:
 public slots:
     void handleLoginRes(bool isSuccess);
     void handleSetBtnClicked();
-    void handleLogSetSignal(QStringList& list);
-    void handleLogCancelSignal();
+    void handleLogSetSignal(const QString& host, const QString& port);
 
 signals:
-    void sendSocketData(const QJsonObject& body);
-    void sendClientData(QStringList&list);
+    void sendSocketData(int type, QJsonObject& body);
 private:
     Ui::LoginWidget *ui;
     bool m_isAutoLogin;
-    QSqlDatabase m_db;
     LoginSettings* m_loginSettingWidget;
+    SqliteClient* m_sqliteCls;
 };
 
 #endif // LOGINWIDGET_H

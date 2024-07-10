@@ -4,8 +4,6 @@
 #include <QWidget>
 #include <QSqlDatabase>
 
-
-
 namespace Ui {
 class LoginSettings;
 }
@@ -18,8 +16,7 @@ public:
     explicit LoginSettings(QWidget *parent = nullptr);
     ~LoginSettings();
 signals:
-    void LogSetSignal(QStringList& list);
-    void LogCancelSignal();
+    void LogSetSignal(const QString& host, const QString& port);
 private slots:
     void handleConfirmbtnClicked();
     void handleCancelbtnClicked();

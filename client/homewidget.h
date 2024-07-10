@@ -19,6 +19,7 @@
 #include "systemwarning.h"
 #include "clientmanage.h"
 #include "sqliteclient.h"
+#include "electronicinterface.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -55,6 +56,7 @@ private:
     FixRecord* m_fixrecord;
     StuffManage* m_stuffmanage;
     SystemWarning* m_systemwarning;
+    Electronicinterface* m_electronicinterface;
 
     QMap<QPushButton*, QWidget*> pageMap;
     QList<QPushButton*> buttonList;

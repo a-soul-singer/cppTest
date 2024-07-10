@@ -146,7 +146,7 @@ void LoginWidget::handleSetBtnClicked()
 void LoginWidget::handleLogSetSignal(const QString& host, const QString& port) // 处理确定按钮的信号
 {
     // 先判断数据库中有没有数据
-    QString sql = "select * t_server limit 1;";
+    QString sql = "select * from t_server limit 1;";
     auto res = m_sqliteCls->execQuerySqlLimitOne(sql);
     if (!res.isEmpty()) { // 有, 更新操作
          sql = "update t_server set host = '%1', port = '%2';";

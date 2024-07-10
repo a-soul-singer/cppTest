@@ -1,0 +1,2 @@
+QFont font("SansSerif", QFont::Bold); // 设置字体为SansSerif，大小为10，加粗
+    comboBox.setFont(font);

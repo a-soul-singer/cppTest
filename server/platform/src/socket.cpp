@@ -72,9 +72,9 @@ bool ServerUtil::ReadJsonRequest(int clientFd, int &type, Value &value)
     if (currReadSize == -1 || currReadSize == 0) {
         return false;
     }
-    LOG_INFO("收到的响应类型:%d", head.type);
-    LOG_INFO("收到的响应字节大小:", to_string(head.length));
-    LOG_INFO("收到的响应的body:", body);
+    LOG_INFO("收到的请求类型:%d", head.type);
+    LOG_INFO("收到的请求字节大小:", to_string(head.length));
+    LOG_INFO("收到的请求的body:", body);
     LOG_INFO("实际收到的字节大小:", to_string(readSize));
     Value root;
     Reader reader;

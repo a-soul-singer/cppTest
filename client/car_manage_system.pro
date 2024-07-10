@@ -1,6 +1,7 @@
 QT       += core gui
 QT       += network
 QT       += sql
+QT       += charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -22,6 +23,7 @@ SOURCES += \
     carinfo.cpp \
     clientmanage.cpp \
     companyinfoview.cpp \
+    electronicinterface.cpp \
     fixrecord.cpp \
     loginsettings.cpp \
     loginwidget.cpp \
@@ -44,6 +46,7 @@ HEADERS += \
     carinfo.h \
     clientmanage.h \
     companyinfoview.h \
+    electronicinterface.h \
     fixrecord.h \
     homewidget.h \
     loginsettings.h \
@@ -60,6 +63,7 @@ FORMS += \
     carinfo.ui \
     clientmanage.ui \
     companyinfoview.ui \
+    electronicinterface.ui \
     fixrecord.ui \
     homewidget.ui \
     loginsettings.ui \

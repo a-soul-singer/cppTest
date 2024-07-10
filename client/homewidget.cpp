@@ -27,6 +27,8 @@ HomeWidget::HomeWidget(QWidget *parent)
     m_stuffmanage = new StuffManage();
     m_systemwarning = new SystemWarning();
 
+    // 将不同的界面上的sendSocketData的信号，绑定主界面的handleSendSocketData这个槽
+    // 然后在这个槽对发送的请求，进行统一处理
     connect(m_loginWidget, &LoginWidget::sendSocketData, this, &HomeWidget::handleSendSocketData);
     connect(m_optlogview, &OptLogView::sendSocketData, this, &HomeWidget::handleSendSocketData);
 

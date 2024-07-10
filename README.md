@@ -55,14 +55,31 @@ struct Data
 		type：0
 		length：head + body
 	body:
-		{"username": "admin", "password": "admin123"};
+		{"action": "login", "username": "admin", "password": "admin123"};
 登录响应:
 	head：
 		type：1
 		length：head + body
 	body:
 		{	
-			"data": "", 
+			"data": {"action": "login"}, 
+			"code": "200/500", 
+			"message": ""
+		};
+==================================================================================================	
+注册请求:
+	head：
+		type：0
+		length：head + body
+	body:
+		{"action": "register", "username": "admin", "password": "admin123"};
+注册响应:
+	head：
+		type：1
+		length：head + body
+	body:
+		{	
+			"data": {"action": "register"}, 
 			"code": "200/500", 
 			"message": ""
 		};
@@ -102,6 +119,82 @@ struct Data
 **offset_cnt = (curr_page - 1) * each_page_cnt;**
 
 **select * from t_opt_log where name = 'username' limit   limit_cnt  offset offset_cnt ;**
+
+## 2.4 用户管理的接口
+
+```json
+查询请求:
+	head：
+		type：2
+		length：head + body
+	body:
+		{
+			"username": "admin", 
+			"action": "query/delete/update/add",
+		};
+查询响应:
+	head：
+		type：3
+		length：head + body
+	body:
+		{	
+			"data": {
+				"action": "query",
+				"users": [[]]
+			}, 
+			"code": "200/500", 
+			"message": ""
+		};
+==================================================================================================		
+删除请求:
+	head：
+		type：2
+		length：head + body
+	body:
+		{
+			"username": "admin", 
+			"action": "delete",
+			"userIds": []
+		};
+删除响应:
+	head：
+		type：3
+		length：head + body
+	body:
+		{	
+			"data": {
+				"action": "delete"
+			}, 
+			"code": "200/500", 
+			"message": ""
+		};
+==================================================================================================	
+修改请求:
+	head：
+		type：2
+		length：head + body
+	body:
+		{
+			"username": "admin", 
+			"action": "update",
+			"userInfos": [
+				[],
+				[]
+			]
+		};
+修改响应:
+	head：
+		type：3
+		length：head + body
+	body:
+		{	
+			"data": {
+				"action": "update"
+			}, 
+			"code": "200/500", 
+			"message": ""
+		};
+```
 
 # 三、后端数据库
 
@@ -169,3 +262,39 @@ struct Data
 	对read函数的返回值，进行判断，如果出现-1或者0的情况，则跳出循环，关闭socket
 ```
 
+# 五、增加新模块，需要做的改动
+
+## 5.1 服务端
+
+（1）增加一个socket_data, 枚举值
+
+（2）增加一个cotroller类的子类
+
+（3）在map中配置枚举值和cotroller类的映射关系
+
+**备注：如果你要增加一个子功能，可以使用增加action的方式**
+
+## 5.2 客户端
+
+（1）增加一个socket_data, 枚举值
+
+（2）增加一个UI界面，把这个UI界面加入到stack，可以实现切换
+
+（3）实现对应的功能函数
+
+```
+当前UI界面：
+    public:
+        void changeWindowRequest(); // 切换界面时要做的请求
+        void handleResponse(const QJsonObject& obj); // 获取对应得响应
+
+    signals:
+        void sendSocketData(int type, QJsonObject& obj); // 发送请求的信号
+
+主界面：
+	// 将UI界面的信号和主界面的槽函数进行绑定，实现发送数据的统一处理
+	connect(m_optlogview, &OptLogView::sendSocketData, this, &HomeWidget::handleSendSocketData);
+	
+	
+	// 在主界面上的handleReadyRead这个函数中对服务端给你返回的响应做统一处理
+```

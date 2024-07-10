@@ -28,6 +28,16 @@
            <string>15条/页</string>
           </property>
          </item>
+         <item>
+          <property name="text">
+           <string>20条/页</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>50条/页</string>
+          </property>
+         </item>
         </widget>
        </item>
        <item>
@@ -44,14 +54,14 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="btnfirstpage">
+        <widget class="QPushButton" name="btnFirstpage">
          <property name="text">
           <string>首页</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="btnpreviouspage">
+        <widget class="QPushButton" name="btnPreviouspage">
          <property name="text">
           <string>上一页</string>
          </property>
@@ -61,21 +71,21 @@
         <widget class="QSpinBox" name="spinBox"/>
        </item>
        <item>
-        <widget class="QPushButton" name="btnjump">
+        <widget class="QPushButton" name="btnJump">
          <property name="text">
           <string>跳转</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="btnnextpage">
+        <widget class="QPushButton" name="btnNextpage">
          <property name="text">
           <string>下一页</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="btntailpage">
+        <widget class="QPushButton" name="btnTailpage">
          <property name="text">
           <string>尾页</string>
          </property>

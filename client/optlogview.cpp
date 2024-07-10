@@ -1,3 +1,6 @@
+#include <QTableWidget>
+#include <QHeaderView>
+
 #include "optlogview.h"
 #include "ui_optlogview.h"
 
@@ -16,7 +19,17 @@ OptLogView::OptLogView(QWidget *parent) :
     QStringList labels = {"序号", "操作类型", "动作", "操作者", "开始时间", "结束时间", "详情"};
     ui->tableWidget->setColumnCount(labels.size());
     ui->tableWidget->setHorizontalHeaderLabels(labels);
-    // TODO 设置表头的格式，列宽，列如何伸缩, 禁止单元格编辑，内容显示方向
+    // TODO 设置表头的格式，列宽，列如何伸缩, 禁止单元格编辑，内容显示方向 
+    for (int i = 0; i < labels.size(); ++i) {
+        QTableWidgetItem *headerItem = new QTableWidgetItem(labels[i]);
+        ui->tableWidget->setVerticalHeaderItem(i, headerItem); // 设置垂直表头
+        ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);//自适应·
+        //ui->tableWidget->setColumnWidth(i, 100); // 设置列宽度为100
+        headerItem->setTextAlignment(Qt::AlignHCenter); // 居中对齐
+        ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//禁止单元格编辑
+        ui->tableWidget->setStyleSheet("QTableWidget::item { vertical-align: bottom; }");//设置文字垂直显示
+
+    }
 }
 
 OptLogView::~OptLogView()
@@ -56,3 +69,5 @@ void OptLogView::handleResponse(const QJsonObject& obj)
 
     }
 }
+
+

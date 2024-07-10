@@ -26,6 +26,7 @@ HomeWidget::HomeWidget(QWidget *parent)
     m_fixrecord = new FixRecord();
     m_stuffmanage = new StuffManage();
     m_systemwarning = new SystemWarning();
+    m_electronicinterface = new Electronicinterface();
 
     // 将不同的界面上的sendSocketData的信号，绑定主界面的handleSendSocketData这个槽
     // 然后在这个槽对发送的请求，进行统一处理
@@ -48,6 +49,7 @@ HomeWidget::HomeWidget(QWidget *parent)
     buttonList.append(ui->pushButtonFix);
     buttonList.append(ui->pushButtonwarning);
     buttonList.append(ui->pushButtonUserManage);
+    buttonList.append(ui->pushButtonInterface);
 
 
     pageMap.insert(ui->pushButtonCompanyInfo, m_companyinfoview);
@@ -59,6 +61,7 @@ HomeWidget::HomeWidget(QWidget *parent)
     pageMap.insert(ui->pushButtonClientManage, m_clientmanage);
     pageMap.insert(ui->pushButtonFix, m_fixrecord);
     pageMap.insert(ui->pushButtonwarning, m_systemwarning);
+    pageMap.insert(ui->pushButtonInterface,m_electronicinterface);
 
     ui->stackedWidget->addWidget(m_companyinfoview);
     ui->stackedWidget->addWidget(m_optlogview);
@@ -69,6 +72,7 @@ HomeWidget::HomeWidget(QWidget *parent)
     ui->stackedWidget->addWidget(m_clientmanage);
     ui->stackedWidget->addWidget(m_fixrecord);
     ui->stackedWidget->addWidget(m_systemwarning);
+    ui->stackedWidget->addWidget(m_electronicinterface);
 
     for (QPushButton *button : buttonList) {
         connect(button, &QPushButton::clicked, this, &HomeWidget::handleChangePage);

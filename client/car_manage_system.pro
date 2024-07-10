@@ -18,6 +18,8 @@ INCLUDEPATH += $$PWD/qxlsx/include
 LIBS += -L $$PWD/qxlsx/lib -l QXlsx
 
 SOURCES += \
+    AES/qaesencryption.cpp \
+    aesencryptionmanager.cpp \
     carinfo.cpp \
     clientmanage.cpp \
     companyinfoview.cpp \
@@ -35,6 +37,12 @@ SOURCES += \
     usermanageview.cpp
 
 HEADERS += \
+    AES/aesni-enc-cbc.h \
+    AES/aesni-enc-ecb.h \
+    AES/aesni-key-exp.h \
+    AES/aesni-key-init.h \
+    AES/qaesencryption.h \
+    aesencryptionmanager.h \
     carinfo.h \
     clientmanage.h \
     companyinfoview.h \

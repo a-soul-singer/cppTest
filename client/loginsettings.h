@@ -1,8 +1,9 @@
-#ifndef LOGINSETTINGS_H
+ #ifndef LOGINSETTINGS_H
 #define LOGINSETTINGS_H
 
 #include <QWidget>
-#include <QSqlDatabase>
+
+#include "sqliteclient.h"
 
 namespace Ui {
 class LoginSettings;
@@ -22,6 +23,7 @@ private slots:
     void handleCancelbtnClicked();
 private:
     Ui::LoginSettings *ui;
+    SqliteClient* m_sqlCls;
 };
 
 #endif // LOGINSETTINGS_H

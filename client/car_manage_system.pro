@@ -10,8 +10,8 @@ CONFIG += c++11
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-INCLUDEPATH += D:/qt_study/qt_0703/qxlsx/include
-LIBS += -LD:/qt_study/qt_0703/qxlsx/lib -lQXlsx
+INCLUDEPATH += $$PWD/qxlsx/include
+LIBS += -L $$PWD/qxlsx/lib -l QXlsx
 
 SOURCES += \
     carinfo.cpp \
@@ -23,6 +23,7 @@ SOURCES += \
     main.cpp \
     homewidget.cpp \
     optlogview.cpp \
+    sqliteclient.cpp \
     stuffmanage.cpp \
     syssettingview.cpp \
     systemwarning.cpp \
@@ -38,6 +39,7 @@ HEADERS += \
     loginwidget.h \
     optlogview.h \
     socket_data.h \
+    sqliteclient.h \
     stuffmanage.h \
     syssettingview.h \
     systemwarning.h \

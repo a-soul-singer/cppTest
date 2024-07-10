@@ -193,9 +193,10 @@ void RunLog::log(const char* filepath, const char* funcname, int line, const cha
 
 	// 拼接最终的日志格式： 时间 [filename:文件名] [funcname:函数名] [line:行号] [tid:线程ID] [日志级别] msg
 	char fullMsg[LogConstant::fullLogMaxLen] = {0};
-	sprintf(fullMsg, "%s [filename:%s] [funcname:%s] [line:%d] [tid:%d] [%s] %s\n",
+	sprintf(fullMsg, "%s [filename:%s] [funcname:%s] [line:%d] [tid:%lld] [%s] %s\n",
 			  currTime, p + 1, funcname, line, get_id(), level, formatMsg);
 
+	cout << fullMsg;
 	// 写入文件中
 	logFileStream->write(fullMsg, strlen(fullMsg));
 	logFileStream->flush();

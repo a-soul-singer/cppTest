@@ -20,6 +20,25 @@ DROP DATABASE IF EXISTS `car_manage_system`;
 CREATE DATABASE IF NOT EXISTS `car_manage_system` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `car_manage_system`;
 
+-- 导出  表 car_manage_system.t_opt_log 结构
+DROP TABLE IF EXISTS `t_opt_log`;
+CREATE TABLE IF NOT EXISTS `t_opt_log` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `type` varchar(50) DEFAULT NULL,
+  `action` varchar(50) DEFAULT NULL,
+  `username` varchar(50) DEFAULT NULL,
+  `start_time` datetime DEFAULT NULL,
+  `end_time` datetime DEFAULT NULL,
+  `result` varchar(1024) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- 正在导出表  car_manage_system.t_opt_log 的数据：~2 rows (大约)
+DELETE FROM `t_opt_log`;
+INSERT INTO `t_opt_log` (`id`, `type`, `action`, `username`, `start_time`, `end_time`, `result`) VALUES
+	(1, '登录', '登录', 'admin', '2024-07-10 11:55:46', '2024-07-10 11:55:47', '登录成功'),
+	(2, '登录', '登录', 'admin', '2024-07-10 11:55:46', '2024-07-10 11:55:47', '登录失败');
+
 -- 导出  表 car_manage_system.t_user 结构
 DROP TABLE IF EXISTS `t_user`;
 CREATE TABLE IF NOT EXISTS `t_user` (

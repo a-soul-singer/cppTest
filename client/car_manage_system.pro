@@ -10,7 +10,10 @@ CONFIG += c++11
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+
+# 指定第三方库的头文件目录
 INCLUDEPATH += $$PWD/qxlsx/include
+# 指定第三方库的库文件目录和具体链接的库文件
 LIBS += -L $$PWD/qxlsx/lib -l QXlsx
 
 SOURCES += \

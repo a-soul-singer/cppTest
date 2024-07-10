@@ -68,41 +68,6 @@ struct Data
 		};
 ```
 
-## 2.3 操作日志接口
-
-```
-登录请求:
-	head：
-		type：4
-		length：head + body
-	body:
-		{
-			"username": "admin", 
-			"each_page_cnt": 20, // 每一页展示的个数
-			"curr_page": 20, // 当前页
-		};
-登录响应:
-	head：
-		type：5
-		length：head + body
-	body:
-		{	
-			"data": {
-				"logs": [[]],
-				"curr_page": 20,
-				"total_page": 25,
-			}, 
-			"code": "200/500", 
-			"message": ""
-		};
-```
-
-**limit_cnt = each_page_cnt;**
-
-**offset_cnt = (curr_page - 1) * each_page_cnt;**
-
-**select * from t_opt_log where name = 'username' limit   limit_cnt  offset offset_cnt ;**
-
 # 三、后端数据库
 
 库名称：car_manage_system
@@ -114,20 +79,6 @@ struct Data
 | id       | int     | 主键，自增，用户ID |
 | username | varchar | 用户名             |
 | password | varchar | 用户密码           |
-
-## 3.2 操作日志表 【t_opt_log】
-
-| 字段名称   | 类型     | 描述               |
-| ---------- | -------- | ------------------ |
-| id         | int      | 主键，自增，用户ID |
-| type       | varchar  | 操作类型           |
-| action     | varchar  | 操作动作           |
-| user       | varchar  | 操作者             |
-| start_time | datetime | 开始时间           |
-| end_time   | datetime | 结束时间           |
-| result     | varchar  | 操作详情           |
-
-**eg:  1 -  登录 | 登录 | admin | 2024-07-09 18:29:53 | 2024-07-09 18:29:53 | 登录成功**
 
 # 四、问题
 
@@ -169,3 +120,14 @@ struct Data
 	对read函数的返回值，进行判断，如果出现-1或者0的情况，则跳出循环，关闭socket
 ```
 
+# 五、增加新模块，需要做的改动
+
+## 5.1 服务端
+
+（1）增加一个socket_data, 枚举值
+
+（2）增加一个cotroller类的子类
+
+（3）在map中配置枚举值和cotroller类的映射关系
+
+**备注：如果你要增加一个子功能，可以使用增加action的方式**

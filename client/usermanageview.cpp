@@ -5,9 +5,13 @@
 #include <QSpacerItem>
 #include <QHBoxLayout>
 #include <QMap>
+#include <QDebug>
 #include <QFileDialog>
+#include <QHeaderView>
+#include <QTableWidgetItem>
 
 #include "xlsxdocument.h"
+#include "socket_data.h"
 
 using namespace std;
 
@@ -39,41 +43,17 @@ UserManageView::UserManageView(QWidget *parent) :
     this->setLayout(verticalLayout);
 
 
-    tableWidget->setColumnCount(4);
+    tableWidget->setColumnCount(3);
 
     QStringList headrs;
-    headrs << "ID" << "用户名" << "密码" << "登录时间";
+    headrs << "ID" << "用户名" << "密码";
     tableWidget->setHorizontalHeaderLabels(headrs);
 
+    tableWidget->verticalHeader()->setVisible(false);
     tableWidget->setColumnWidth(0, 50);
-    tableWidget->setColumnWidth(1, 200);
-    tableWidget->setColumnWidth(2, 200);
-    tableWidget->setColumnWidth(3, 300);
+    tableWidget->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+    tableWidget->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
 
-    map<int, vector<QString>> rowData={
-        {1, {"1","admin", "admin123", "2024-07-09 21:00"}},
-        {2, {"2","root","root","2024-07-09 21:10"}}
-    };
-    for (int row = 3; row < 10; ++row) {
-        QString id = QString::number(row);
-        QString username = "user" + id;
-        QString password = "password" + id;
-        QString loginTime = "2024-07-09 10:00" + QString::number(row);
-        rowData[row] = {id, username, password, loginTime};
-    }
-
-    tableWidget->setRowCount(rowData.size()); // 设置表格行数为 rowData 的大小
-
-    int row = 0;
-    for (const auto &pair : rowData) {
-        const auto &rowData = pair.second;
-        for (int col = 0; col < rowData.size(); ++col) {
-            QTableWidgetItem *item = new QTableWidgetItem(rowData[col]);
-            item->setTextAlignment(Qt::AlignCenter);//居中显示
-            tableWidget->setItem(row, col, item);
-        }
-        ++row;
-    }
 
     connect(queryButton, &QPushButton::clicked, this, &UserManageView::handQueryButtonClicked);
     connect(exportButton, &QPushButton::clicked,this, &UserManageView::handExportButtonClicked);
@@ -83,6 +63,41 @@ UserManageView::~UserManageView()
 {
     //delete ui;
 }
+
+QLineEdit* UserManageView::getLineEdit()
+{
+    return lineEdit;
+}
+
+void UserManageView::changeWindowRequest()
+{
+    QJsonObject obj;
+    obj["action"] = "query_users";
+    emit sendSocketData(USERS_REQ, obj);
+}
+
+void UserManageView::handleUserResponse(const QJsonObject &obj)
+{
+    tableWidget->clearContents();
+    // 解析obj
+    QString code = obj["code"].toString();
+    QJsonObject data = obj["data"].toObject();
+    if (code == "200") {
+        QJsonArray users = data["users"].toArray();
+        tableWidget->setRowCount(users.size());
+        for (int i = 0; i < users.size(); ++i) {
+            QJsonArray log = users[i].toArray();
+            for (int j = 0; j < log.size(); ++j) {
+                QTableWidgetItem* item = new QTableWidgetItem(log[j].toString());
+                tableWidget->setItem(i, j, item);
+                item->setTextAlignment(Qt::AlignCenter);
+            }
+        }
+    } else {
+
+    }
+}
+
 
 void UserManageView::handQueryButtonClicked()
 {
@@ -103,9 +118,11 @@ void UserManageView::handQueryButtonClicked()
                 tableWidget->setRowHidden(row, true); // 隐藏不匹配的行
             }
         }
+
     }
 }
 
+//导出
 void UserManageView::handExportButtonClicked()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("导出 .xlsx 文件"), "", tr("Excel 文件 (*.xlsx)")); // 打开 .xlsx 文件保存对话框

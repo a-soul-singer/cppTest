@@ -32,6 +32,7 @@ HomeWidget::HomeWidget(QWidget *parent)
     // 然后在这个槽对发送的请求，进行统一处理
     connect(m_loginWidget, &LoginWidget::sendSocketData, this, &HomeWidget::handleSendSocketData);
     connect(m_optlogview, &OptLogView::sendSocketData, this, &HomeWidget::handleSendSocketData);
+    connect(m_usermanageview, &UserManageView::sendSocketData, this, &HomeWidget::handleSendSocketData);
 
     connect(this, &HomeWidget::loginRes, m_loginWidget, &LoginWidget::handleLoginRes);
     connect(m_client, &QTcpSocket::readyRead, this, &HomeWidget::handleReadyRead);
@@ -140,6 +141,24 @@ void HomeWidget::handleSendSocketData(int type, QJsonObject &body)
         qDebug() << "发送的请求字节大小:" << head.length;
         qDebug() << "发送的请求的body:" << bytes;
         qDebug() << "实际发送的字节大小:" << writeSize;
+    }else if (type == USERS_REQ){
+        // json对象转为字符串
+        QJsonDocument doc(body);
+        QByteArray bytes = doc.toJson(QJsonDocument::Compact);
+        Head head;
+        head.type = type;
+        head.length = sizeof(Head) + bytes.size();
+        char *request = new char[head.length];
+        struct Data *data = (struct Data *)request;
+        data->head = head;
+        memcpy(data->body, bytes.data(), bytes.size());
+        qint64 writeSize = m_client->write(request, head.length);
+        qDebug() << "发送的请求类型:" << head.type;
+        qDebug() << "发送的请求字节大小:" << head.length;
+        qDebug() << "发送的请求的body:" << bytes;
+        qDebug() << "实际发送的字节大小:" << writeSize;
+    }else{
+
     }
 }
 
@@ -180,6 +199,8 @@ void HomeWidget::handleReadyRead()
             }
         } else if (head.type == OPT_LOG_RES) {
             m_optlogview->handleResponse(obj);
+        } else if(head.type ==USERS_RES){
+            m_usermanageview->handleUserResponse(obj);
         }
     }
 }
@@ -192,6 +213,8 @@ void HomeWidget::handleChangePage()
         if (targetPage == m_optlogview) { // 当前是操作日志界面
             // 向后端发送请求
             m_optlogview->changeWindowRequest();
+        }else if(targetPage == m_usermanageview){//当前是用户管理界面
+            m_usermanageview->changeWindowRequest();
         }
         ui->stackedWidget->setCurrentWidget(targetPage);
     }

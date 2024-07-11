@@ -17,6 +17,11 @@ public:
     ~SysSettingView();
 private slots:
     void setStylesheetFromFile(const QString &item);
+    void setFontFamily(const QString &fontFamily);
+    void setFontSize(int fontSize);
+
+signals:
+    void setStyleSheetSignal(const QString& style);
 
 private:
     Ui::SysSettingView *ui;

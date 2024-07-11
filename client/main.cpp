@@ -19,6 +19,6 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     HomeWidget win;
     setCenterWin(win);
-    //win.show();
+    win.show();
     return app.exec();
 }

@@ -37,8 +37,11 @@ private slots:
     void handleSendSocketData(int type, QJsonObject& body);
     void handleReadyRead();
     void handleChangePage();
+    void handleSetStyleSheetSignal(const QString& style);
 
     void on_pushButtonExitLogin_clicked();
+
+
 
 signals:
     void loginRes(bool);

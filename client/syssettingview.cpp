@@ -14,22 +14,17 @@ SysSettingView::SysSettingView(QWidget *parent) :
     ui->spinBox->setRange(10, 50);
     ui->spinBox->setValue(20);
 
-    m_map={{"文艺体","../client/qss/FontWy.qss"},
-           {"佛系体","../client/qss/FontFx.qss"},
-           {"好身体","../client/qss/FontSt.qss"},
-           {"10","../client/qss/FontSize10.qss"},
-           {"15","../client/qss/FontSize15.qss"},
-           {"20","../client/qss/FontSize20.qss"},
-           {"黑色","../client/qss/SysSettingBlack.qss"},
-           {"白色","../client/qss/SysSettingWhite.qss"},
-           {"灰色","../client/qss/SysSettingGray.qss"},
-          };
+    m_map = {
+        {"黑色","../client/qss/SysSettingBlack.qss"},
+        {"白色","../client/qss/SysSettingWhite.qss"},
+        {"灰色","../client/qss/SysSettingGray.qss"},
+    };
 
     connect(ui->comboBoxSysSetting, &QComboBox::currentTextChanged, this, &SysSettingView::setStylesheetFromFile);
     connect(ui->fontComboBox, &QComboBox::currentTextChanged, this, &SysSettingView::setFontFamily);
     connect(ui->spinBox, QOverload<int>::of(&QSpinBox::valueChanged), this, &SysSettingView::setFontSize);
     // 从数据库中读取当前的主题的设置
-//    setStylesheetFromFile("灰色", false);
+    //    setStylesheetFromFile("灰色", false);
 }
 
 SysSettingView::~SysSettingView()

@@ -1,11 +1,11 @@
 
 QWidget {
-    background: rgb(80, 80, 80);
+    background: rgb(255, 192, 203);
 }
 
 
 QComboBox {
-    background: rgb(80, 80, 80);
+    background: rgb(255, 192, 203);
 }
 
 

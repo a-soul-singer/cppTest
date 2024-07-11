@@ -1,25 +1,13 @@
-* {
-	color: white;
-	background: #333333;
-}
-
-QPushButton {
-	border: 2px solid #707070; /* 边框 */
-	color: #FF0000;
-}
-
-QPushButton:hover {
-    background-color: #1c7cd6; /* 鼠标悬停时的背景色 */
-    border-color: #5c93fe; /* 鼠标悬停时的边框颜色 */
-}
-
-QPushButton:pressed {
-    background-color: #555555; /* 鼠标按下时的背景色 */
-    border-color: #333333; /* 鼠标按下时的边框颜色 */
+QWidget {
+    background: rgb(40, 40, 40);
 }
 
 QComboBox {
-    background: rgb(255, 0, 0);
+    background: rgb(40, 40, 40);
+}
+
+*{
+   color : rgb (255,255,255);
 }
 
 QComboBox#comBoxSysSetting {
@@ -27,5 +15,12 @@ QComboBox#comBoxSysSetting {
 }
 
 QComboBox:hover {
-    border-color: #5c93fe; 
+    border-color: #00FF00; 
 }
+
+
+QPushButton {
+	border: 2px solid #000000; /* 边框 */
+	color: #000000;
+}
+

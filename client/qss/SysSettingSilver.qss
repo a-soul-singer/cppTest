@@ -1,11 +1,11 @@
 
 QWidget {
-    background: rgb(80, 80, 80);
+    background: rgb(192, 192, 192);
 }
 
 
 QComboBox {
-    background: rgb(80, 80, 80);
+    background: rgb(192, 192, 192);
 }
 
 
@@ -16,4 +16,9 @@ QComboBox:hover {
 
 *{
    color:rgb(0,0,0);
+}
+
+
+QPushbutton{
+
 }

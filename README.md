@@ -207,8 +207,9 @@ struct Data
 | id       | int     | 主键，自增，用户ID |
 | username | varchar | 用户名             |
 | password | varchar | 用户密码           |
+| role     | varchar | common/admin       |
 
-## 3.2 操作日志表 【t_opt_log】
+## 3.2 操作日志表 【tjiaose_opt_log】
 
 | 字段名称   | 类型     | 描述               |
 | ---------- | -------- | ------------------ |
@@ -222,7 +223,66 @@ struct Data
 
 **eg:  1 -  登录 | 登录 | admin | 2024-07-09 18:29:53 | 2024-07-09 18:29:53 | 登录成功**
 
-# 四、问题
+## 3.3 客户表 【t_customer】
+
+| 字段名称      | 类型     | 描述               |
+| ------------- | -------- | ------------------ |
+| id            | int      | 主键，自增，用户ID |
+| username      | varchar  | 客户名称           |
+| sex           | varchar  | 性别               |
+| register_time | datetime | 注册时间           |
+| money         | double   | 余额               |
+| total_money   | double   | 总的充值金额       |
+| vip_level     | varchar  | 会员等级           |
+| phone         | varchar  | 手机号             |
+
+## 3.4 车表 【t_car】
+
+| 字段名称 | 类型     | 描述               |
+| -------- | -------- | ------------------ |
+| id       | int      | 主键，自增，用户ID |
+| card     | varchar  | 车牌               |
+| type     | varchar  | 车型               |
+| color    | varchar  | 颜色               |
+| engine   | varchar  | 发动机编码         |
+| logo     | varchar  | 品牌               |
+| buy_time | datetime | 购买日期           |
+| user_id  | int      | 外键，用户ID       |
+
+## 3.5 充值消费记录表 【t_recharge_record】
+
+| 字段名称 | 类型    | 描述               |
+| -------- | ------- | ------------------ |
+| id       | int     | 主键，自增，用户ID |
+| 交易金额 | varchar | 交易金额           |
+| 交易时间 | varchar | 交易时间           |
+| 交易方式 | varchar | 交易方式           |
+| type     | varchar | 交易类型           |
+| user_id  | int     | 外键，用户ID       |
+
+## 3.6 维修手册表【t_handbook】
+
+| 字段名称 | 类型    | 描述               |
+| -------- | ------- | ------------------ |
+| id       | int     | 主键，自增，用户ID |
+| 品牌     | varchar | 交易金额           |
+| 系列     | varchar | 交易时间           |
+| 部位     | varchar | 交易方式           |
+| content  | text    | 维修内容           |
+
+## 3.7 材料表【t_handbook】
+
+| 字段名称 | 类型    | 描述               |
+| -------- | ------- | ------------------ |
+| id       | int     | 主键，自增，用户ID |
+| 名称     | varchar | 交易金额           |
+| price    | double  | 交易价格           |
+| type     | int     | 买入/使用/退还     |
+| 品牌     | varchar | 交易方式           |
+| location |         | 交易地点           |
+| 交易时间 |         | 交易时间           |
+
+# 四、问题   
 
 ## 4.1 服务端和客户端通信时，由于数据量大，造成缓冲区溢出问题
 

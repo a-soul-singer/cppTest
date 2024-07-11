@@ -33,6 +33,7 @@ HomeWidget::HomeWidget(QWidget *parent)
     connect(m_loginWidget, &LoginWidget::sendSocketData, this, &HomeWidget::handleSendSocketData);
     connect(m_optlogview, &OptLogView::sendSocketData, this, &HomeWidget::handleSendSocketData);
     connect(m_usermanageview, &UserManageView::sendSocketData, this, &HomeWidget::handleSendSocketData);
+    connect(m_syssettingview, &SysSettingView::setStyleSheetSignal, this, &HomeWidget::handleSetStyleSheetSignal);
 
     connect(this, &HomeWidget::loginRes, m_loginWidget, &LoginWidget::handleLoginRes);
     connect(m_client, &QTcpSocket::readyRead, this, &HomeWidget::handleReadyRead);
@@ -218,6 +219,11 @@ void HomeWidget::handleChangePage()
         }
         ui->stackedWidget->setCurrentWidget(targetPage);
     }
+}
+
+void HomeWidget::handleSetStyleSheetSignal(const QString &style)
+{
+    this->setStyleSheet(style);
 }
 
 void HomeWidget::on_pushButtonExitLogin_clicked()
